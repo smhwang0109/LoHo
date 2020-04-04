@@ -1,0 +1,28 @@
+from django import forms
+from .models import Article
+from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator
+from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
+
+def unit_100(value):
+    if value%100:
+        raise forms.ValidationError('100원 단위로 입력해주세요.')
+
+def check_even(value):
+    if value%2:
+        raise forms.ValidationError('인원 수는 짝수만 가능합니다.')
+
+
+class UploadForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        exclude = ('author', 'created_at', 'thumnail_image')
+        widgets = {
+            'event_date' : DateTimePickerInput(
+                options={
+                "format": "l d A h:m",
+                "showClose": True,
+                "showClear": True,
+                "showTodayButton": True,
+                }
+            )
+        }

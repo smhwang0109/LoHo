@@ -16,7 +16,7 @@ def check_even(value):
 def user_path(instance, filename):
     from random import choice
     import string
-    arr = [choic(string.ascii_letters) for _ in range(8)]
+    arr = [choice(string.ascii_letters) for _ in range(8)]
     pid = ''.join(arr)
     extension = filename.split('.')[-1]
     return '{}/{}.{}'.format(instance.author.username, pid, extension)

@@ -73,6 +73,7 @@ class ArticleCreateUpdateView(LoginRequiredMixin, TemplateView):  # 게시글 �
 
     def post(self, request, *args, **kwargs):  # 액션 (서버에 저장)
         action = request.POST.get('action')  # request.POST 객체에서 데이터 얻기
+        image = request.FILES['image']
         post_data = {key: request.POST.get(key) for key in ('title', 'content', 'price', 'participation', 'event_date', 'image')}  # 작성자를 입력 받지 않도록 수정
         for key in post_data:
             if not post_data[key]:
@@ -81,17 +82,20 @@ class ArticleCreateUpdateView(LoginRequiredMixin, TemplateView):  # 게시글 �
         post_data['author'] = self.request.user  # 작성자를 현재 사용자로 설정
         if action == 'create':
             article = Article.objects.create(**post_data)
+            article.image = image
+            article.save()
             messages.success(self.request, '게시글이 저장되었습니다.')  # success 레벨로 메시지 저장
         elif action == 'update':
             article = self.get_object()
             for key, value in post_data.items():
                 setattr(article, key, value)
+            article.image = image
             article.save()
             messages.success(self.request, '게시글이 저장되었습니다.')  # success 레벨로 메시지 저장
         else:
             messages.error(self.request, '알 수 없는 요청입니다.', extra_tags='danger')  # error 레벨로 메시지 저장
 
-        return HttpResponseRedirect('/articles/index/')  # 저장 완료되면 '/article/로 이동됨'
+        return HttpResponseRedirect('/articles/')  # 저장 완료되면 '/articles/로 이동됨'
 
         
         ctx = {

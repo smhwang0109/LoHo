@@ -66,7 +66,6 @@ class ArticleCreateUpdateView(LoginRequiredMixin, TemplateView):  # 게시글 �
 
     def get(self, request, *args, **kwargs):  # 화면 요청
         article = self.get_object()
-
         ctx = {
             'article': article,
         }

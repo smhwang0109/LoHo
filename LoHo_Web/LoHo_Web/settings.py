@@ -44,9 +44,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.naver',
     'allauth.socialaccount.providers.kakao',
-    'allauth.socialaccount.providers.instagram',
+    'allauth.socialaccount.providers.facebook',
 
     'bootstrap4',
     'bootstrap_datepicker_plus',
@@ -141,6 +141,10 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'LoHo_Web', 'static')]
 LOGIN_URL = '/accounts/login/'
 
 LOGIN_REDIRECT_URL = '/articles/'
+
+ACCOUNT_LOGOUT_REDIRECT_URL = '/articles/'
+
+ACCOUNT_LOGOUT_ON_GET = True
 
 
 AUTHENTICATION_BACKENDS = (

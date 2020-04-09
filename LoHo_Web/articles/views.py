@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
 
 from .models import Article
+from .forms import UploadForm
 
 class IndexView(TemplateView):    # 게시글 목록
     template_name = 'articles/index.html'
@@ -66,8 +67,10 @@ class ArticleCreateUpdateView(LoginRequiredMixin, TemplateView):  # 게시글 �
 
     def get(self, request, *args, **kwargs):  # 화면 요청
         article = self.get_object()
+        form = UploadForm
         ctx = {
             'article': article,
+            'form':form
         }
         return self.render_to_response(ctx)
 

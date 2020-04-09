@@ -50,6 +50,9 @@ INSTALLED_APPS = [
 
     'bootstrap4',
     'bootstrap_datepicker_plus',
+
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -134,9 +137,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'LoHo_Web', 'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 LOGIN_URL = '/accounts/login/'
 
@@ -186,3 +189,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 BOOTSTRAP4 = {
     'include_jquery': True,
 }
+
+CKEDITOR_UPLOAD_PATH = "uploads/"

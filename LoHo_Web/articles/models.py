@@ -3,6 +3,7 @@ from django.utils import timezone
 from django import forms
 from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator
 from django.conf import settings
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 def unit_100(value):
@@ -23,7 +24,7 @@ def user_path(instance, filename):
 
 class Article(models.Model):
     title = models.CharField('제목', max_length=126, validators=[MinLengthValidator(1)])
-    content = models.TextField('내용', validators=[MinLengthValidator(1)])
+    content = RichTextUploadingField('내용', validators=[MinLengthValidator(1)])
     author = models.ForeignKey('auth.User', related_name='articles', on_delete=models.CASCADE)
     created_at = models.DateTimeField('작성시간', auto_now_add=True)
     price = models.IntegerField(

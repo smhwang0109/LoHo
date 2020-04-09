@@ -10,7 +10,10 @@
 {{ form.media }}            {# Adds date-picker required JS and CSS #}
 <form action="." method="POST" enctype="multipart/form-data">
   {% csrf_token %}
-  <input type="hidden" name="action" value="{%if article %}update{%else%}create{%endif%}">
+
+  {{form.media}}
+  {{form.as_p}}
+  <!-- <input type="hidden" name="action" value="{%if article %}update{%else%}create{%endif%}">
   <p><label for="id_title">제목:</label> <input type="text" name="title" maxlength="126" required id="id_title"></p>
   <p><label for="id_content">내용:</label> <textarea name="content" cols="40" rows="10" required id="id_content">
   </textarea></p>
@@ -22,7 +25,7 @@
         <div class="input-group-text"><i class="glyphicon glyphicon-calendar"></i></div>
     </div>
   </div></p>
-  <p><label for="id_image">Image:</label> <input type="file" name="image" accept="image/*" required id="id_image"></p>
+  <p><label for="id_image">Image:</label> <input type="file" name="image" accept="image/*" required id="id_image"></p> -->
   <input type="submit" value="작성 완료">
 </form>
 

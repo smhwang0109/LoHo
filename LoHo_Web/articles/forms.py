@@ -2,6 +2,7 @@ from django import forms
 from .models import Article
 from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator
 from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 def unit_100(value):
     if value%100:
@@ -17,6 +18,10 @@ class UploadForm(forms.ModelForm):
         model = Article
         exclude = ('author', 'created_at', 'thumnail_image')
         widgets = {
+            'title' : forms.TextInput(
+                attrs={'class':'form-control', 'style':'width:100%', 'placeholder': '제목을 입력하세요.'}
+            ),
+            'content' : forms.CharField(widget=CKEditorUploadingWidget()),
             'event_date' : DateTimePickerInput(
                 options={
                 "format": "l d A h:m",

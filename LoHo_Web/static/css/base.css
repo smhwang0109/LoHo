@@ -1,0 +1,11 @@
+.search-form {
+    border: none;
+    background: gainsboro;
+    outline: none;
+}
+.search-icon {
+    background: none;
+    border: none;
+    position: absolute;
+    margin-left: auto;
+}

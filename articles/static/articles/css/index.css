@@ -1,0 +1,27 @@
+.subtitle {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.next-arrow {
+    height: 1.5rem;
+}
+
+.category-item {
+    max-width: 99.2px;
+    max-height: 99.2px;
+    margin: 0 1rem;
+    width: 10vw;
+    height: 10vw;
+}
+
+.devide {
+    border: #cccccc 1px solid;
+}
+
+.loho-describe {
+    max-width: 992px;
+    width: 100%;
+    margin: 2rem 0;
+}

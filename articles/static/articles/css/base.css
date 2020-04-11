@@ -4,6 +4,12 @@
     font-family: 'NanumSquare', sans-serif;
 }
 
+body {
+    max-width: 992px;
+    width: 100% !important;
+    margin: 0 auto !important;
+}
+
 .search-form {
     margin-top: 2px;
     position: relative;

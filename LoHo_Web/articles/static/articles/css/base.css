@@ -1,0 +1,32 @@
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+
+* {
+    font-family: 'NanumSquare', sans-serif;
+}
+
+.search-form {
+    margin-top: 2px;
+    position: relative;
+}
+
+.nav-link, .dropdown-item {
+    color: black !important;
+    font-weight: bold;
+}
+
+.search-input {
+    height: 40px;
+    padding: 3.5px 10px;
+    border: none;
+    border-radius: 15px;
+    background: #f5f5f5;
+    outline: none;
+}
+
+.search-icon {
+    background: none;
+    border: none;
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+}

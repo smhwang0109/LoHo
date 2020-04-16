@@ -6,30 +6,18 @@
 
 {% load bootstrap4 %}       {# import bootstrap4/bootstrap3 #}
 {% bootstrap_css %}         {# Embed Bootstrap CSS #}
-{% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
 {{ form.media }}            {# Adds date-picker required JS and CSS #}
+{% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
+
 <form action="." method="POST" enctype="multipart/form-data">
   {% csrf_token %}
 
   {{form.media}}
-  {{form.as_p}}
-  <!-- <input type="hidden" name="action" value="{%if article %}update{%else%}create{%endif%}">
-  <p><label for="id_title">제목:</label> <input type="text" name="title" maxlength="126" required id="id_title"></p>
-  <p><label for="id_content">내용:</label> <textarea name="content" cols="40" rows="10" required id="id_content">
-  </textarea></p>
-  <p><label for="id_price">가격:</label> <input type="number" name="price" value="1000" required id="id_price"></p>
-  <p><label for="id_participation">참여 인원:</label> <input type="number" name="participation" value="2" required id="id_participation"></p>
-  <p><label for="id_event_date">날짜:</label> <div class="input-group date">
-    <input type="text" name="event_date" class="form-control" required id="id_event_date" dp_config="{&quot;id&quot;: &quot;dp_1&quot;, &quot;picker_type&quot;: &quot;DATETIME&quot;, &quot;linked_to&quot;: null, &quot;options&quot;: {&quot;showClose&quot;: true, &quot;showClear&quot;: true, &quot;showTodayButton&quot;: true, &quot;format&quot;: &quot;l d A h:m&quot;}}"/>
-    <div class="input-group-addon input-group-append" data-target="#datetimepicker1" data-toggle="datetimepickerv">
-        <div class="input-group-text"><i class="glyphicon glyphicon-calendar"></i></div>
-    </div>
-  </div></p>
-  <p><label for="id_image">Image:</label> <input type="file" name="image" accept="image/*" required id="id_image"></p> -->
+  {%bootstrap_form form%}
   <input type="submit" value="작성 완료">
 </form>
 
 <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
-    
+
 
 {% endblock %}

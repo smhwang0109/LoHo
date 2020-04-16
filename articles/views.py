@@ -18,7 +18,7 @@ class IndexView(TemplateView):    # 게시글 목록
     def get(self, request, *args, **kwargs):
         queryset = Article.objects.all()  # 모든 게시글
         ctx = {
-            'articles': queryset # 검색 결과
+            'articles': queryset, # 검색 결과
         }  # 템플릿에 전달할 데이터
         return self.render_to_response(ctx)
 
@@ -57,7 +57,6 @@ class ArticleCreateUpdateView(LoginRequiredMixin, TemplateView):  # 게시글 �
         queryset = queryset or self.queryset
         pk = self.kwargs.get(self.pk_url_kwargs)
         article = queryset.filter(pk=pk).first()
-
         if pk:
             if not article: # 검색 결과가 없으면 곧바로 에러 발생
                 raise Http404('invalid pk')

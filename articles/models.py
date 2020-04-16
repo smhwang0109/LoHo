@@ -10,10 +10,6 @@ def unit_100(value):
     if value%100:
         raise forms.ValidationError('100원 단위로 입력해주세요.')
 
-def check_even(value):
-    if value%2:
-        raise forms.ValidationError('인원 수는 짝수만 가능합니다.')
-
 def user_path(instance, filename):
     from random import choice
     import string
@@ -35,15 +31,35 @@ class Article(models.Model):
             unit_100,
         ])
     participation = models.IntegerField(
-        '참여 인원',
-        default=2,
+        '참가 가능 인원',
+        default=1,
         validators=[
-            MinValueValidator(2),
-            check_even,
+            MinValueValidator(1),
+        ])
+    men_applicant = models.IntegerField(
+        '남성 신청인원',
+        default=0,
+        validators=[
+            MinValueValidator(0),
+        ])
+    wemen_applicant = models.IntegerField(
+        '여성 신청인원',
+        default=0,
+        validators=[
+            MinValueValidator(0),
         ])
     event_date = models.DateTimeField('날짜')
     image = models.ImageField(upload_to=user_path, default='')
     thumnail_image = models.ImageField(blank=True)
+    CATEGORY_CHOICES = [
+        ('스포츠', '스포츠'),
+        ('이색체험', '이색체험'),
+        ('쿠킹', '쿠킹'),
+        ('예술', '예술'),
+        ('관람', '관람'),
+        ('기타', '기타'),
+    ]
+    category = models.CharField(max_length=5, choices=CATEGORY_CHOICES, default='')
     
 
     def __str__(self):

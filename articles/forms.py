@@ -8,15 +8,11 @@ def unit_100(value):
     if value%100:
         raise forms.ValidationError('100원 단위로 입력해주세요.')
 
-def check_even(value):
-    if value%2:
-        raise forms.ValidationError('인원 수는 짝수만 가능합니다.')
-
 
 class UploadForm(forms.ModelForm):
     class Meta:
         model = Article
-        exclude = ('author', 'created_at', 'thumnail_image')
+        exclude = ('author', 'created_at')
         widgets = {
             'title' : forms.TextInput(
                 attrs={'class':'form-control', 'style':'width:100%', 'placeholder': '제목을 입력하세요.'}

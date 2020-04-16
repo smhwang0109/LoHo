@@ -3,8 +3,6 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'articles/js/slick-1.8.1/slick/slick.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'articles/js/slick-1.8.1/slick/slick-theme.css' %}">
 <link rel="stylesheet" href="{% static 'articles/css/index.css' %}">
 {% endblock%}
 
@@ -51,31 +49,28 @@
   <hr class="devide">
   <div class="row my-4 my-lg-5">
     <div class="subtitle col-12">이런 취미 어때요?</div>
-    {% for article in articles %}
-    <div class="card col-4 col-md-4 col-lg-3 mx-3">
-      <img src="{{article.image.url}}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">{{article.title}}</h5>
-        <p class="card-text">{{article.content}}</p>
+    <div class="row row-cols-3 row-cols-md-4">
+      {% for article in articles %}
+      <div class="col mb-4">
+        <div class="card h-100">
+          <img src="{{article.image.url}}" class="card_img card-img-top" alt="활동 이미지">
+          <div class="card-body">
+            <small>{{ article.category }}</small>
+            <h5 class="card-title">{{ article.title }}</h5>
+            <small class="card-text">{{ article.men_applicant }}/{{ article.participation }}  {{ article.men_applicant }}/{{ article.participation }}</small>
+            <br>
+            <small>{{ article.price }}</small>
+            <br>
+            <small>{{ article.event_date }}</small>
+          </div>
+        </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-  </div>
-  <div class="center">
-    <div>1</div>
-    <div>2</div>
-    <div>3</div>
-    <div>4</div>
-    <div>5</div>
   </div>
   <hr class="devide">
   <img class="loho-describe" src="{% static 'articles/img/LoHo설명.png' %}" alt="">
 </div>
-
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script type="text/javascript" src="{% static 'articles/js/slick-1.8.1/slick/slick.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'articles/js/index.js' %}"></script>
 
 
 {% endblock %}

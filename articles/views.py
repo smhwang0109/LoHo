@@ -16,16 +16,16 @@ class IndexView(TemplateView):    # 게시글 목록
     template_name = 'articles/index.html'
 
     def get(self, request, *args, **kwargs):
-        queryset = Article.objects.all()  # 모든 게시글
+        articles = Article.objects.all()  # 모든 게시글
         ctx = {
-            'articles': queryset, # 검색 결과
+            'articles': articles, # 검색 결과
         }  # 템플릿에 전달할 데이터
         return self.render_to_response(ctx)
 
 
 
 class ArticleDetailView(TemplateView):  # 게시글 상세
-    template_name = 'article/article_detail.html'
+    template_name = 'articles/article_detail.html'
     queryset = Article.objects.all()
     pk_url_kwargs = 'article_id'  # 검색 데이터의 primary key를 전달받을 이름
 

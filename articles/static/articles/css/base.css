@@ -5,9 +5,18 @@
 }
 
 body {
-    max-width: 992px;
     width: 100% !important;
     margin: 0 auto !important;
+}
+
+.container {
+    max-width: 992px;
+}
+
+.navbar{
+    margin: 0 auto;
+    max-width: 992px;
+    height: 65px;
 }
 
 .search-form {
@@ -35,4 +44,8 @@ body {
     position: absolute;
     right: 20px;
     bottom: 10px;
+}
+
+.footer {
+    max-width: 992px;
 }

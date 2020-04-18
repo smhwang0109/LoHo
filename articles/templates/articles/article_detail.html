@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'articles/css/detail.css' %}">
+{% endblock%}
+
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-9 d-flex flex-column align-items-center">
+      <img class="article-image" src="{{ article.image.url }}" alt="활동 이미지">
+      <h5>{{ article.category }}</h5>
+      <h3>{{ article.title }}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2 font-weight-bold">
+      <p>상세정보</p>
+    </div>
+    <div class="col-10">
+      <p>날짜: {{ article.event_date }}</p>
+      <p>장소: 위치위치</p>
+      <p>참여인원: 각 {{ article.participation }}명</p>
+    </div>
+  </div>
+  <div class="d-none d-md-block col-md-3 article-sidebar">
+    <p>참가비</p>
+    <p>{{ article.price }}</p>
+  </div>
+</div>
+{% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.views.generic import TemplateView
@@ -9,8 +9,10 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
 
+from django.contrib.auth.models import User
 from .models import Article
 from .forms import UploadForm
+from datetime import datetime
 
 class IndexView(TemplateView):    # 게시글 목록
     template_name = 'articles/index.html'
@@ -41,7 +43,7 @@ class ArticleDetailView(TemplateView):  # 게시글 상세
     def get(self, request, *args, **kwargs):
         article = self.get_object()
         ctx = {
-            'article': article
+            'article': article,
         }
         return self.render_to_response(ctx)
 
@@ -66,7 +68,7 @@ class ArticleCreateUpdateView(LoginRequiredMixin, TemplateView):  # 게시글 �
 
     def get(self, request, *args, **kwargs):  # 화면 요청
         article = self.get_object()
-        form = UploadForm
+        form = UploadForm(instance=article)
         ctx = {
             'article': article,
             'form':form
@@ -83,21 +85,41 @@ class ArticleCreateUpdateView(LoginRequiredMixin, TemplateView):  # 게시글 �
         
         post_data['author'] = self.request.user  # 작성자를 현재 사용자로 설정
         if action == 'create':
-            article = Article.objects.create(**post_data)
-            article.image = image
-            article.save()
+
+            article = self.get_object()
+            form = UploadForm(request.POST, instance=article)
+            if form.is_valid():
+                article = form.save(commit=False)
+                article.created_at = datetime.datetime.now
+                article.image = image
+                article.image = image
+                article.save()
+
+            # article = Article.objects.create(**post_data)
+            # article.image = image
+            # article.save()
             messages.success(self.request, '게시글이 저장되었습니다.')  # success 레벨로 메시지 저장
         elif action == 'update':
             article = self.get_object()
-            for key, value in post_data.items():
-                setattr(article, key, value)
-            article.image = image
-            article.save()
+
+            
+            form = UploadForm(request.POST, instance=article)
+            if form.is_valid():
+                article = form.save(commit=False)
+                article.author = self.request.user
+                article.created_at = datetime.datetime.now
+                article.image = image
+                article.save()
+
+            # for key, value in post_data.items():
+            #     setattr(article, key, value)
+            # article.image = image
+            # article.save()
             messages.success(self.request, '게시글이 저장되었습니다.')  # success 레벨로 메시지 저장
         else:
             messages.error(self.request, '알 수 없는 요청입니다.', extra_tags='danger')  # error 레벨로 메시지 저장
 
-        return HttpResponseRedirect('/articles/')  # 저장 완료되면 '/articles/로 이동됨'
+            return HttpResponseRedirect('/articles/')  # 저장 완료되면 '/articles/로 이동됨'
 
         
         ctx = {

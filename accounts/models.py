@@ -11,4 +11,7 @@ class Profile(models.Model):
         ('여', '여')
     ]
     gender = models.CharField(max_length=2, choices=GENDER_CHOICES)
+    host_introduce = models.TextField(blank=True)
+    host_career = models.TextField(blank=True)
+
     

@@ -36,13 +36,13 @@ class Article(models.Model):
         validators=[
             MinValueValidator(1),
         ])
-    men_applicant = models.IntegerField(
+    man_count = models.IntegerField(
         '남성 신청인원',
         default=0,
         validators=[
             MinValueValidator(0),
         ])
-    wemen_applicant = models.IntegerField(
+    woman_count = models.IntegerField(
         '여성 신청인원',
         default=0,
         validators=[

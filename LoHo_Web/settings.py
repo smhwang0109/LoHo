@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 INSTALLED_APPS = [
     'accounts',
     'articles',
+    'django.contrib.humanize', # 숫자 세자리마다 쉼표 찍기
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

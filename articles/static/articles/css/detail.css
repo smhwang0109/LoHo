@@ -5,7 +5,45 @@
 }
 
 .article-sidebar {
-    position: fixed;
-    right: 0;
-    top: 64px;
+    border: 1px solid #dee2e6;
+    padding: 1rem;
 }
+
+.host-photo {
+    width: 70%;
+    padding-bottom: 70%;
+    background-size: cover;
+    border: 1px black solid;
+}
+
+.content {
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.extrabold {
+    font-weight: 800;
+}
+
+.subtitle {
+    font-size: 0.8rem;
+}
+
+.sidebar-title {
+    color: #b3b3b3;
+    font-weight: bold;
+}
+
+.sidebar-content {
+    font-size: 1.5rem;
+}
+
+.join-button {
+    width: 100%;
+    font-weight: 800;
+    color: white;
+    background-color: #ffb6c1;
+    border: none;
+    height: 60px;
+}
+

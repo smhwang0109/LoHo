@@ -49,3 +49,11 @@ body {
 .footer {
     max-width: 992px;
 }
+
+.man-color {
+    color: #75d1bf;
+}
+
+.woman-color {
+    color: #ffb6c1;
+}

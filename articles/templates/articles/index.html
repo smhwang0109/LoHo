@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load humanize %}
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'articles/css/index.css' %}">
@@ -36,7 +37,7 @@
     </div>
   </div>
 
-  <div class="row my-4 my-lg-5 ">
+  <div class="row my-4 my-lg-5 mx-2">
     <div class="subtitle col-12">카테고리 <img class="next-arrow" src="{% static 'articles/img/next-arrow.png' %}" alt="카테고리로 이동"></div>
     <div class="col-12 d-flex justify-content-between">
       <a href="."><img class="category-item" src="{% static 'articles/img/스포츠.png' %}" alt="스포츠"></a>
@@ -52,6 +53,7 @@
     <div class="subtitle col-12">이런 취미 어때요?</div>
     <div class="row row-cols-2 row-cols-md-4">
       {% for article in articles %}
+      {% if forloop.counter < 5 %}
       <div class="col mb-4">
         <div class="card">
           <a href="{% url 'articles:detail' article.pk %}"><img src="{{article.image.url}}" class="card-img-top" alt="활동 이미지"></a>
@@ -59,15 +61,14 @@
             <div class="card-body">
               <small>{{ article.category }}</small>
               <h5 class="card-title"><strong>{{ article.title }}</strong></h5>
-              <small class="card-text">{{ article.men_applicant }}/{{ article.participation }}  {{ article.men_applicant }}/{{ article.participation }}</small>
+              <small class="card-text"><span class="man-color">{{ article.man_count }}/{{ article.participation }}</span>  <span class="woman-color">{{ article.woman_count }}/{{ article.participation }}</span></small>
               <br>
-              <small>{{ article.price }}원</small>
-              <br>
-              <small>{{ article.event_date }}</small>
+              <small>{{ article.price|intcomma }}원 {{ article.event_date|date:"n월 d일" }}</small>
             </div>
           </a>
         </div>
       </div>
+      {% endif %}
       {% endfor %}
     </div>
   </div>

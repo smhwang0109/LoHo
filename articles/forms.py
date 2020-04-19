@@ -12,18 +12,16 @@ def unit_100(value):
 class UploadForm(forms.ModelForm):
     class Meta:
         model = Article
-        exclude = ('author', 'created_at')
+        exclude = ('author', 'created_at',)
         widgets = {
             'title' : forms.TextInput(
                 attrs={'class':'form-control', 'style':'width:100%', 'placeholder': '제목을 입력하세요.'}
             ),
-            'content' : forms.CharField(widget=CKEditorUploadingWidget()),
             'event_date' : DateTimePickerInput(
                 options={
-                "format": "l d A h:m",
                 "showClose": True,
                 "showClear": True,
                 "showTodayButton": True,
                 }
-            )
+            ) 
         }

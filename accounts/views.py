@@ -22,10 +22,7 @@ class ProfileUpdateView(View):
 
         if hasattr(user, 'profile'):
             profile = user.profile
-            profile_form = ProfileForm(initial={
-                'nickname':profile.nickname,
-                'profile_photo':profile.profile_photo,
-            })
+            profile_form = ProfileForm(instance=profile)
         else:
             profile_form = ProfileForm()
 
@@ -43,10 +40,10 @@ class ProfileUpdateView(View):
             profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
         else:
             profile_form = ProfileForm(request.POST, request.FILES)
-
+        print(request.FILES)
         if profile_form.is_valid():
             profile = profile_form.save(commit=False) # 기존 것 가져오는게 아니고 새로 만들 경우 user를 지정해줘야 한다.
             profile.user = u
             profile.save()
 
-        return redirect('profile', pk=request.user.pk)
+        return redirect('accounts:profile', pk=request.user.pk)

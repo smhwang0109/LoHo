@@ -35,9 +35,9 @@
               {{ user.username }}
             </a>
             <div class="dropdown-menu w-25" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'accounts:profile' user.pk %}">내 정보</a>
+              <a class="dropdown-item" href="{% url 'profile' user.pk %}">내 정보</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{% url 'accounts:account_logout' %}">로그아웃</a>
+              <a class="dropdown-item" href="{% url 'account_logout' %}">로그아웃</a>
             </div>
           </li>
           </li>
@@ -46,7 +46,7 @@
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'accounts:account_login' %}">로그인</a>
+            <a class="nav-link" href="{% url 'account_login' %}">로그인</a>
           </li>
           {% endif %}
         </ul>

@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('detail/<int:article_id>', views.ArticleDetailView.as_view(), name='detail'),
     path('upload/', views.ArticleCreateUpdateView.as_view(), name='upload'),
+    path('<int:article_id>/comment_upload/', views.comment_upload, name='comment_upload')
 ]
 

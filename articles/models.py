@@ -4,6 +4,7 @@ from django import forms
 from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator
 from django.conf import settings
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.conf import settings
 
 
 def unit_100(value):
@@ -21,8 +22,9 @@ def user_path(instance, filename):
 class Article(models.Model):
     title = models.CharField('제목', max_length=126, validators=[MinLengthValidator(1)])
     content = RichTextUploadingField('내용', validators=[MinLengthValidator(1)])
-    author = models.ForeignKey('auth.User', related_name='articles', on_delete=models.CASCADE)
-    created_at = models.DateTimeField('작성시간', auto_now_add=True)
+    to_who = models.TextField('대상', default='')
+    detail_plan = models.TextField('상세 일정', default='')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='articles', on_delete=models.CASCADE)
     price = models.IntegerField(
         '가격',
         default=1000,
@@ -60,17 +62,24 @@ class Article(models.Model):
         ('기타', '기타'),
     ]
     category = models.CharField(max_length=5, choices=CATEGORY_CHOICES, default='')
+    created_at = models.DateTimeField('작성시간', auto_now_add=True)
+    updated_at = models.DateTimeField('수정시간', auto_now=True)
     
 
     def __str__(self):
         return '[{}] {}'.format(self.id, self.title)
 
-# class Comment(models.Model):
-#     author = models.ForeignKey('auth.User', related_name='comments', on_delete=models.CASCADE)
-#     rank = models.IntegerField(
-        # default=0,
-        # validators=[
-        #     MinValueValidator(0),
-        #     MaxValueValidator(5),
-        # ],
-        # )
+class Comment(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments', on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, related_name='comments', on_delete=models.CASCADE)
+    rank = models.IntegerField(
+        '평점',
+        default=0,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(5),
+        ],
+        )
+    content = models.TextField('내용', validators=[MinLengthValidator(1)])
+    created_at = models.DateTimeField('작성시간', auto_now_add=True)
+    updated_at = models.DateTimeField('수정시간', auto_now=True)

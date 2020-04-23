@@ -1,18 +1,22 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
 
 from django.contrib.auth.models import User
-from .models import Article
-from .forms import UploadForm
+from .models import Article, Comment
+from .forms import UploadForm, CommentForm
 from datetime import datetime
+
+from django.db.models import Avg
 
 class IndexView(TemplateView):    # 게시글 목록
     template_name = 'articles/index.html'
@@ -42,8 +46,12 @@ class ArticleDetailView(TemplateView):  # 게시글 상세
 
     def get(self, request, *args, **kwargs):
         article = self.get_object()
+        comments_aggregate = Comment.objects.aggregate(Avg('rank'))
+        comment_form = CommentForm()
         ctx = {
             'article': article,
+            'comments_rank_avg': comments_aggregate['rank__avg'],
+            'comment_form': comment_form,
         }
         return self.render_to_response(ctx)
 
@@ -103,3 +111,15 @@ class ArticleCreateUpdateView(LoginRequiredMixin, TemplateView):  # 게시글 �
             'article': self.get_object() if action == 'update' else None,
         }
         return self.render_to_response(ctx)
+
+@require_POST
+@login_required
+def comment_upload(request, article_id):
+    article = get_object_or_404(Article, pk=article_id)
+    comment_form = CommentForm(request.POST)
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.author = request.user
+        comment.article = article
+        comment.save()
+    return redirect('articles:detail', article.pk)

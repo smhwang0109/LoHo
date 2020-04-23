@@ -9,6 +9,7 @@ class ProfileInline(admin.StackedInline):
     con_delete = False # 프로필 아예 삭제 불가
 
 class CustomUserAdmin(UserAdmin):
+    list_display = ('id', 'username')
     inlines = (ProfileInline,)
 
 admin.site.unregister(User)

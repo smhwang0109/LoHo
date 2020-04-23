@@ -16,7 +16,6 @@ body {
 .navbar{
     margin: 0 auto;
     max-width: 992px;
-    height: 65px;
 }
 
 .search-form {

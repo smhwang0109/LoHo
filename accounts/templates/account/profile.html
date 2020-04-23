@@ -16,7 +16,7 @@
     <h2>{{profile_user.profile.nickname}}</h2>
     {% endif %}
     {% if user == profile_user %} <!--로그인한 사용자와 프로필 소유자가 일치할 때만 프로필 편집 가능-->
-    <a href="{% url 'accounts:profile_update' %}">
+    <a href="{% url 'profile_update' %}">
       <button type="button" class="btn btn-default">프로필 편집</button>
     </a>
     {% endif %}

@@ -123,3 +123,37 @@ def comment_upload(request, article_id):
         comment.article = article
         comment.save()
     return redirect('articles:detail', article.pk)
+
+@require_POST
+@login_required
+def man_participation(request, article_id):
+    article = get_object_or_404(Article, pk=article_id)
+    if request.user.profile.gender == '여':
+        return redirect('articles:woman_participation', article_id)
+    if article.man_participations_count >= article.participations:
+        messages.error(request, '인원 초과입니다.')
+        return redirect('articles:detail', article_id)
+    article_manparticipation, article_manparticipation_created = article.manparticipation_set.get_or_create(user=request.user)
+
+    if not article_manparticipation_created:
+        messages.error(request, '이미 신청하셨습니다.')
+        return redirect('articles:detail', article_id)
+    return redirect('articles:detail', article.pk)
+
+@require_POST
+@login_required
+def woman_participation(request, article_id):
+    article = get_object_or_404(Article, pk=article_id)
+    if request.user.profile.gender == '남':
+        return redirect('articles:man_participation', article_id)
+    if article.woman_participations_count >= article.participations:
+        messages.error(request, '인원 초과입니다.')
+        return redirect('articles:detail', article_id)
+    article_womanparticipation, article_womanparticipation_created = article.womanparticipation_set.get_or_create(user=request.user)
+
+    if not article_womanparticipation_created:
+        messages.error(request, '이미 신청하셨습니다.')
+        return redirect('articles:detail', article_id)
+    return redirect('articles:detail', article.pk)
+
+

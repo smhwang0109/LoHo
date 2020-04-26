@@ -61,7 +61,7 @@
             <div class="card-body">
               <small>{{ article.category }}</small>
               <h5 class="card-title"><strong>{{ article.title }}</strong></h5>
-              <small class="card-text"><span class="man-color">{{ article.man_count }}/{{ article.participation }}</span>  <span class="woman-color">{{ article.woman_count }}/{{ article.participation }}</span></small>
+              <small class="card-text"><span class="man-color">{{ article.man_participations_count }}/{{ article.participations }}</span>  <span class="woman-color">{{ article.woman_participations_count }}/{{ article.participations }}</span></small>
               <br>
               <small>{{ article.price|intcomma }}원 {{ article.event_date|date:"n월 d일" }}</small>
             </div>

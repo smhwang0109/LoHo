@@ -32,24 +32,24 @@ class Article(models.Model):
             MinValueValidator(1000),
             unit_100,
         ])
-    participation = models.IntegerField(
+    participations = models.IntegerField(
         '참가 가능 인원',
         default=1,
         validators=[
             MinValueValidator(1),
         ])
-    man_count = models.IntegerField(
-        '남성 신청인원',
-        default=0,
-        validators=[
-            MinValueValidator(0),
-        ])
-    woman_count = models.IntegerField(
-        '여성 신청인원',
-        default=0,
-        validators=[
-            MinValueValidator(0),
-        ])
+    man_participations = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        related_name='man_participations',
+        through='ManParticipation',
+        )
+    woman_participations = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        related_name='woman_participations',
+        through='WomanParticipation',
+        )
     event_date = models.DateTimeField('날짜')
     image = models.ImageField(upload_to=user_path, default='')
     thumnail_image = models.ImageField(blank=True)
@@ -68,6 +68,36 @@ class Article(models.Model):
 
     def __str__(self):
         return '[{}] {}'.format(self.id, self.title)
+
+    @property
+    def man_participations_count(self):
+        return self.man_participations.count()
+    
+    @property
+    def woman_participations_count(self):
+        return self.woman_participations.count()
+
+class ManParticipation(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = (
+            ('user', 'article')
+        )
+
+class WomanParticipation(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = (
+            ('user', 'article')
+        )
 
 class Comment(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments', on_delete=models.CASCADE)

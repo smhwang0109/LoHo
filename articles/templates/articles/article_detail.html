@@ -28,7 +28,7 @@
         <div class="col-10 content">
           <p>날짜: {{ article.event_date }}</p>
           <p>장소: 위치위치</p>
-          <p>참여인원: 남/여 각 {{ article.participation }}명</p>
+          <p>참여인원: 남/여 각 {{ article.participations }}명</p>
         </div>
       </div>
       <hr class="ml-0">
@@ -107,10 +107,20 @@
       <p class="extrabold sidebar-content">{{ article.event_date|date:"n월 d일" }}</p>
       <br>
       <p class="sidebar-title">현재 참여인원</p>
-      <p><span class="extrabold sidebar-content man-color">남 {{ article.man_count }}</span> <span class="sidebar-title">/{{ article.participation }}</span></p>
-      <p><span class="extrabold sidebar-content woman-color">여 {{ article.woman_count }}</span> <span class="sidebar-title">/{{ article.participation }}</span></p>
+      <p><span class="extrabold sidebar-content man-color">남 {{ article.man_participations_count }}</span> <span class="sidebar-title">/{{ article.participations }}</span></p>
+      <p><span class="extrabold sidebar-content woman-color">여 {{ article.woman_participations_count }}</span> <span class="sidebar-title">/{{ article.participations }}</span></p>
       <br>
-      <button class="join-button">참여하기</button>
+      <form action="{% if request.user.profile.gender == '남' %}{% url 'articles:man_participation' article.pk %}{% else %}{% url 'articles:woman_participation' article.pk %}{% endif %}" method="POST">
+        {% csrf_token %}
+        <button class="join-button">참여하기</button>
+      </form>
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
     </div>
   </div>
 </div>

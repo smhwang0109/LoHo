@@ -16,7 +16,7 @@ from .models import Article, Comment
 from .forms import UploadForm, CommentForm
 from datetime import datetime
 
-from django.db.models import Avg
+from django.db.models import Avg, Q
 
 class IndexView(TemplateView):    # 게시글 목록
     template_name = 'articles/index.html'
@@ -113,16 +113,18 @@ class ArticleCreateUpdateView(LoginRequiredMixin, TemplateView):  # 게시글 �
         return self.render_to_response(ctx)
 
 @require_POST
-@login_required
 def comment_upload(request, article_id):
-    article = get_object_or_404(Article, pk=article_id)
-    comment_form = CommentForm(request.POST)
-    if comment_form.is_valid():
-        comment = comment_form.save(commit=False)
-        comment.author = request.user
-        comment.article = article
-        comment.save()
-    return redirect('articles:detail', article.pk)
+    if request.user.is_authenticated:
+        article = get_object_or_404(Article, pk=article_id)
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.author = request.user
+            comment.article = article
+            comment.save()
+        return redirect('articles:detail', article.pk)
+    else:
+        return redirect('login')
 
 @require_POST
 @login_required
@@ -157,3 +159,21 @@ def woman_participation(request, article_id):
     return redirect('articles:detail', article.pk)
 
 
+def category_list(request, category):
+    if category == 'all':
+        articles = Article.objects.all()
+    else:
+        articles = Article.objects.filter(category=category)
+    ctx = {
+        'articles':articles,
+    }
+    return render(request, 'articles/article_list.html', ctx)
+
+def search(request):
+    keyword = request.GET.get('keyword')
+    articles = Article.objects.filter(Q(title__contains=keyword)|Q(content__contains=keyword)|Q(category__contains=keyword))
+    ctx = {
+        'articles':articles,
+        'keyword':keyword,
+    }
+    return render(request, 'articles/article_list.html', ctx)

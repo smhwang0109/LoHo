@@ -4,13 +4,19 @@
     font-family: 'NanumSquare', sans-serif;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     width: 100% !important;
     margin: 0 auto !important;
+    height: 100%;
 }
 
 .container {
-    max-width: 992px;
+    max-width: 992px !important;
+    min-height: 100%;
 }
 
 .navbar{
@@ -45,8 +51,21 @@ body {
     bottom: 10px;
 }
 
-.footer {
+.wrap {
     max-width: 992px;
+    position: relative;
+    min-height: 100%;
+    padding-bottom: 50px;
+}
+
+footer {
+    height: 50px;
+    max-width: 962px;
+    position: absolute;
+    bottom: 0;
+    background-color: #343a40;
+    margin-top: 1rem;
+    width: 100%;
 }
 
 .man-color {
@@ -55,4 +74,14 @@ body {
 
 .woman-color {
     color: #ffb6c1;
+}
+
+.extrabold {
+    font-weight: 800;
+}
+
+.subtitle {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
 }

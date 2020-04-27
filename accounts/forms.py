@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import Profile
 
+from bootstrap_datepicker_plus import DatePickerInput
+
 class CreateUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
@@ -25,4 +27,13 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ['user']
+        exclude = ['user', 'host_introduce', 'host_career']
+        widgets = {
+            'birthday' : DatePickerInput(
+                options={
+                "showClose": True,
+                "showClear": True,
+                "showTodayButton": True,
+                }
+            ) 
+        }

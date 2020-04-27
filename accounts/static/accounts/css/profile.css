@@ -1,0 +1,22 @@
+.profile-photo {
+    width: 50%;
+    padding-bottom: 50%;
+    background-size: cover;
+    border: 3px black solid;
+}
+
+.content {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.nickname {
+    display: inline;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.profile-update-btn {
+}

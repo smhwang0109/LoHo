@@ -1,20 +1,19 @@
 {% extends 'base.html' %}
 
-
-
-{% block content %}
-
+{% block css %}
 {% load bootstrap4 %}       {# import bootstrap4/bootstrap3 #}
 {% bootstrap_css %}         {# Embed Bootstrap CSS #}
-{{ form.media }}            {# Adds date-picker required JS and CSS #}
+{% endblock %}
+
+{% block content %}
 {% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
 
 <form action="" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <input type="hidden" name="action" value="{%if article %}update{%else%}create{%endif%}">
 
-  {{form.media}}
-  {{form.as_p}}
+  {{ form.media }}
+  {{ form.as_p }}
   <input type="submit" value="작성 완료">
 </form>
 

@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
+{% block css %}
+{% load bootstrap4 %}       {# import bootstrap4/bootstrap3 #}
+{% bootstrap_css %}         {# Embed Bootstrap CSS #}
+{% endblock %}
+
 {% block content %}
+{% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
 <h1>{{user.username}} 프로필 수정 </h1>
 
 {% if error_msg %}
@@ -12,9 +18,13 @@
 
 <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
+    {{ profile_form.media }}
+    {% bootstrap_form user_form %}
+    {% bootstrap_form profile_form %}
     <input type="submit" value="Update">
 </form>
+
+<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+
 
 {% endblock %}

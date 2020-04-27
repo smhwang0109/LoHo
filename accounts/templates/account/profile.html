@@ -1,32 +1,72 @@
 {% extends 'base.html' %}
-{% block content %}
 
 {% load static %}
+{% load humanize %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'accounts/css/profile.css' %}">
+{% endblock%}
+
+{% block content %}
 
 <div class="row">
-  <div class="col-xs-6 col-md-3">
-    {% if profile_user.profile.profile_photo %}
-    <img src="{{profile_user.profile.profile_photo.url}}" width="200" alt="프로필 사진"> <br>
-    {% else %}
-    <img src="{% static 'accounts/img/수민사진.jpg' %}" width="200" alt="기본 프로필 사진"><br>
-    {% endif %}
+  <div class="col-6 col-md-3 d-flex flex-column justify-content-around align-items-center">
+    <div class="profile-photo rounded-circle" style="background-image: url({% if profile_user.profile.profile_photo %}{{ profile_user.profile.profile_photo.url }}{% else %}{% static 'accounts/img/anonymoususer.png' %}{% endif %});"></div>
   </div>
-  <div class="col-xs-6 col-md-3">
+  <div class="col-6 col-md-9">
     {% if profile_user.profile.nickname %}
-    <h2>{{profile_user.profile.nickname}}</h2>
+    <p class="nickname">{{profile_user.profile.nickname}}</p>
     {% endif %}
     {% if user == profile_user %} <!--로그인한 사용자와 프로필 소유자가 일치할 때만 프로필 편집 가능-->
     <a href="{% url 'profile_update' %}">
-      <button type="button" class="btn btn-default">프로필 편집</button>
+      <button type="button" class="btn btn-secondary profile-update-btn">프로필 편집</button>
     </a>
     {% endif %}
-    <h3>username: {{profile_user.username}} <br>
-      {% if profile_user.first_name is not None %}
-      name: {{profile_user.first_name}} {{profile_user.last_name}} <br>
-      {% endif %}
+    <br>
+    {% if profile_user.first_name and profile_user.last_name and profile_user.profile.gender and profile_user.profile.birthday %}
+    <p class="content">이름: {{ profile_user.last_name }}{{ profile_user.first_name }} <br></p>
+    <p class="content">성별: {{ profile_user.profile.gender }} <br></p>
+    <p class="content">생일: {{ profile_user.profile.birthday}} <br></p>
+    {% else %}
+    {% if user == profile_user %}
+    <p class="content"> 프로필을 수정해주세요!</p>
+    {% endif %}
+    {% endif %}
     </h3>
   </div>
 </div>
-
+<hr class="devide">
+<div class="row my-3 my-lg-4 mx-2">
+  <div class="subtitle col-12">참여한 활동</div>
+  {% if profile_user.first_name and profile_user.last_name and profile_user.profile.gender and profile_user.profile.birthday %}
+  {% for participation in participations %}
+  <div class="col-6 col-md-4">
+    <div class="mb-4">
+      <div class="card">
+        <a href="{% url 'articles:detail' participation.article.pk %}"><img src="{{ participation.article.image.url }}" class="card-img-top" alt="활동 이미지"></a>
+        <a href="{% url 'articles:detail' participation.article.pk %}" class="text-reset text-decoration-none">
+          <div class="card-body">
+            <small>{{ participation.article.category }}</small>
+            <h5 class="card-title"><strong>{{ participation.article.title }}</strong></h5>
+            <small class="card-text"><span class="man-color">{{ participation.article.man_participations_count }}/{{ participation.article.participations }}</span> <span class="woman-color">{{ participation.article.woman_participations_count }}/{{ participation.article.participations }}</span></small>
+            <br>
+            <small>{{ participation.article.price|intcomma }}원 {{ participation.article.event_date|date:"n월 d일" }}</small>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12 d-flex justify-content-center">
+    <p class="extrabold">참여한 활동이 없습니다.</p>
+  </div>
+  {% endfor %}
+  {% else %}
+  {% if user == profile_user %}
+  <p class="content"> 프로필을 수정해주세요!</p>
+  {% endif %}
+  {% endif %}
+  
+</div>
 
 {% endblock %}

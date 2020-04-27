@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'articles/css/list.css' %}">
+{% endblock%}
+
+
+{% block content %}
+<div class="row my-4 my-lg-5 category-box">
+  <div class="col-12 d-flex justify-content-around align-items-center">
+    {% if request.resolver_match.url_name == 'category_list' %}
+    <span><a class="category-item" href="{% url 'articles:category_list' '스포츠' %}">스포츠</a></span>
+    <span><a class="category-item" href="{% url 'articles:category_list' '이색체험' %}">이색체험</a></span>
+    <span><a class="category-item" href="{% url 'articles:category_list' '쿠킹' %}">쿠킹</a></span>
+    <span><a class="category-item" href="{% url 'articles:category_list' '예술' %}">예술</a></span>
+    <span><a class="category-item" href="{% url 'articles:category_list' '관람' %}">관람</a></span>
+    <span><a class="category-item" href="{% url 'articles:category_list' '기타' %}">기타</a></span>
+    {% elif request.resolver_match.url_name == 'search' %}
+    <p class="m-0 extrabold">'{{ keyword }}'에 대한 검색 결과 ({{ articles.count }})</p>
+    {% endif %}
+  </div>
+</div>
+<hr class="devide">
+<div class="row my-4 my-lg-5 mx-2">
+  {% for article in articles %}
+  <div class="col-3">
+    <div class="mb-4">
+      <div class="card">
+        <a href="{% url 'articles:detail' article.pk %}"><img src="{{ article.image.url }}" class="card-img-top" alt="활동 이미지"></a>
+        <a href="{% url 'articles:detail' article.pk %}" class="text-reset text-decoration-none">
+          <div class="card-body">
+            <small>{{ article.category }}</small>
+            <h5 class="card-title"><strong>{{ article.title }}</strong></h5>
+            <small class="card-text"><span
+                class="man-color">{{ article.man_participations_count }}/{{ article.participations }}</span> <span
+                class="woman-color">{{ article.woman_participations_count }}/{{ article.participations }}</span></small>
+            <br>
+            <small>{{ article.price|intcomma }}원 {{ article.event_date|date:"n월 d일" }}</small>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12 d-flex justify-content-center">
+    {% if request.resolver_match.url_name == 'category_list' %}
+    <p class="extrabold">준비중입니다!</p>
+    {% elif request.resolver_match.url_name == 'search' %}
+    <p class="extrabold">'{{ keyword }}'에 대한 검색 결과가 없습니다.</p>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+
+{% endblock %}

@@ -10,118 +10,116 @@
 
 
 {% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col-12 col-md-9">
-      <div class="row">
-        <div class="col-12 d-flex flex-column align-items-center">
-          <img class="article-image" src="{{ article.image.url }}" alt="활동 이미지">
-          <h5 class="my-3 font-weight-bold">{{ article.category }}</h5>
-          <h3 class="mb-3 extrabold">{{ article.title }}</h3>
-        </div>
-      </div>
-      <hr class="ml-0">
-      <div class="row">
-        <div class="col-2 extrabold">
-          <p>상세정보</p>
-        </div>
-        <div class="col-10 content">
-          <p>날짜: {{ article.event_date }}</p>
-          <p>장소: 위치위치</p>
-          <p>참여인원: 남/여 각 {{ article.participations }}명</p>
-        </div>
-      </div>
-      <hr class="ml-0">
-      <div class="row">
-        <div class="col-12 extrabold">
-          <p>호스트 소개</p>
-        </div>
-        <div class="col-2 d-flex flex-column align-items-center">
-          <div class="host-photo rounded-circle" style="background-image: url({{ article.author.profile.profile_photo.url }});"></div>
-          <p class="content">{{ article.author }}</p>
-        </div>
-        <div class="col-10 content">
-          <p>{{ article.author.profile.host_introduce }}</p>
-        </div>
-        <div class="col-12 extrabold content">
-          <p>경력사항</p>
-        </div>
-        <div class="col-12 content">
-          <p>{{ article.author.profile.host_career|linebreaksbr }}</p>
-        </div>
-      </div>
-      <hr class="ml-0">
-      <div class="row">
-        <div class="col-12 extrabold">
-          <p>Hobby 소개</p>
-        </div>
-        <div class="col-12 content">
-          <p>{{ article.content }}</p>
-        </div>
-        <div class="col-12 extrabold subtitle">
-          <p>대상</p>
-        </div>
-        <div class="col-12 content">
-          <p>{{ article.to_who|linebreaksbr }}</p>
-        </div>
-        <div class="col-12 extrabold subtitle">
-          <p>상세 일정</p>
-        </div>
-        <div class="col-12 content">
-          <p>{{ article.detail_plan|linebreaksbr }}</p>
-        </div>
-      </div>
-      <hr class="ml-0">
-      <div class="row">
-        <div class="col-12 extrabold">
-          <p>리뷰({{ article.comments.count }}개)</p>
-          <p>{% if comments_rank_avg %}{{ comments_rank_avg }}점{% endif %}</p>
-        </div>
-        {% for comment in article.comments.all %}
-        <div class="col-2 d-flex flex-column align-items-center">
-          <div class="host-photo rounded-circle" style="background-image: url({% if comment.author.profile.profile_photo %}{{ comment.author.profile.profile_photo.url }}{% else %}{% static 'accounts/img/수민사진.jpg' %}{% endif %});"></div>
-          <p class="content">{{ comment.author }}</p>
-        </div>
-        <div class="col-10 content">
-          <p>{{ comment.content }}</p>
-        </div>
-        {% empty %}
-        <div class="col-12 content">
-          <p>댓글이 없습니다.</p>
-        </div>
-        {% endfor %}
-        <div class="col-12 content">
-          <form action="{% url 'articles:comment_upload' article.pk %}" method="POST">
-            {% csrf_token %}
-            {% bootstrap_form comment_form %}
-            <button class="join-button">댓글 작성</button>
-          </form>
-        </div>
+<div class="row">
+  <div class="col-12 col-md-9">
+    <div class="row">
+      <div class="col-12 d-flex flex-column align-items-center">
+        <img class="article-image" src="{{ article.image.url }}" alt="활동 이미지">
+        <h5 class="my-3 font-weight-bold">{{ article.category }}</h5>
+        <h3 class="mb-3 extrabold">{{ article.title }}</h3>
       </div>
     </div>
-    <div class="d-none d-md-block col-md-3 article-sidebar">
-      <p class="sidebar-title">참가비</p>
-      <p class="extrabold sidebar-content">{{ article.price|intcomma }}원</p>
-      <br>
-      <p class="sidebar-title">모임 날짜</p>
-      <p class="extrabold sidebar-content">{{ article.event_date|date:"n월 d일" }}</p>
-      <br>
-      <p class="sidebar-title">현재 참여인원</p>
-      <p><span class="extrabold sidebar-content man-color">남 {{ article.man_participations_count }}</span> <span class="sidebar-title">/{{ article.participations }}</span></p>
-      <p><span class="extrabold sidebar-content woman-color">여 {{ article.woman_participations_count }}</span> <span class="sidebar-title">/{{ article.participations }}</span></p>
-      <br>
-      <form action="{% if request.user.profile.gender == '남' %}{% url 'articles:man_participation' article.pk %}{% else %}{% url 'articles:woman_participation' article.pk %}{% endif %}" method="POST">
-        {% csrf_token %}
-        <button class="join-button">참여하기</button>
-      </form>
-      {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
+    <hr class="ml-0">
+    <div class="row">
+      <div class="col-2 extrabold">
+        <p>상세정보</p>
+      </div>
+      <div class="col-10 content">
+        <p>날짜: {{ article.event_date }}</p>
+        <p>장소: 위치위치</p>
+        <p>참여인원: 남/여 각 {{ article.participations }}명</p>
+      </div>
     </div>
+    <hr class="ml-0">
+    <div class="row">
+      <div class="col-12 extrabold">
+        <p>호스트 소개</p>
+      </div>
+      <div class="col-2 d-flex flex-column align-items-center">
+        <div class="host-photo rounded-circle" style="background-image: url({{ article.author.profile.profile_photo.url }});"></div>
+        <p class="content">{{ article.author }}</p>
+      </div>
+      <div class="col-10 content">
+        <p>{{ article.author.profile.host_introduce }}</p>
+      </div>
+      <div class="col-12 extrabold content">
+        <p>경력사항</p>
+      </div>
+      <div class="col-12 content">
+        <p>{{ article.author.profile.host_career|linebreaksbr }}</p>
+      </div>
+    </div>
+    <hr class="ml-0">
+    <div class="row">
+      <div class="col-12 extrabold">
+        <p>Hobby 소개</p>
+      </div>
+      <div class="col-12 content">
+        <p>{{ article.content }}</p>
+      </div>
+      <div class="col-12 extrabold subtitle">
+        <p>대상</p>
+      </div>
+      <div class="col-12 content">
+        <p>{{ article.to_who|linebreaksbr }}</p>
+      </div>
+      <div class="col-12 extrabold subtitle">
+        <p>상세 일정</p>
+      </div>
+      <div class="col-12 content">
+        <p>{{ article.detail_plan|linebreaksbr }}</p>
+      </div>
+    </div>
+    <hr class="ml-0">
+    <div class="row">
+      <div class="col-12 extrabold">
+        <p>리뷰({{ article.comments.count }}개)</p>
+        <p>{% if comments_rank_avg %}{{ comments_rank_avg }}점{% endif %}</p>
+      </div>
+      {% for comment in article.comments.all %}
+      <div class="col-2 d-flex flex-column align-items-center">
+        <div class="host-photo rounded-circle" style="background-image: url({% if comment.author.profile.profile_photo %}{{ comment.author.profile.profile_photo.url }}{% else %}{% static 'accounts/img/수민사진.jpg' %}{% endif %});"></div>
+        <p class="content">{{ comment.author }}</p>
+      </div>
+      <div class="col-10 content">
+        <p>{{ comment.content }}</p>
+      </div>
+      {% empty %}
+      <div class="col-12 content">
+        <p>댓글이 없습니다.</p>
+      </div>
+      {% endfor %}
+      <div class="col-12 content">
+        <form action="{% url 'articles:comment_upload' article.pk %}" method="POST">
+          {% csrf_token %}
+          {% bootstrap_form comment_form %}
+          <button class="join-button">댓글 작성</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="d-none d-md-block col-md-3 article-sidebar">
+    <p class="sidebar-title">참가비</p>
+    <p class="extrabold sidebar-content">{{ article.price|intcomma }}원</p>
+    <br>
+    <p class="sidebar-title">모임 날짜</p>
+    <p class="extrabold sidebar-content">{{ article.event_date|date:"n월 d일" }}</p>
+    <br>
+    <p class="sidebar-title">현재 참여인원</p>
+    <p><span class="extrabold sidebar-content man-color">남 {{ article.man_participations_count }}</span> <span class="sidebar-title">/{{ article.participations }}</span></p>
+    <p><span class="extrabold sidebar-content woman-color">여 {{ article.woman_participations_count }}</span> <span class="sidebar-title">/{{ article.participations }}</span></p>
+    <br>
+    <form action="{% if request.user.profile.gender == '남' %}{% url 'articles:man_participation' article.pk %}{% else %}{% url 'articles:woman_participation' article.pk %}{% endif %}" method="POST"><form action="{% if request.user.profile.gender == '남' %}{% url 'articles:man_participation' article.pk %}{% else %}{% url 'articles:woman_participation' article.pk %}{% endif %}" method="POST">
+      {% csrf_token %}
+      <button class="join-button">참가하기</button>
+    </form>
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

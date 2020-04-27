@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -192,3 +193,6 @@ BOOTSTRAP4 = {
 }
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
+
+IAMPORT_KEY = config('IAMPORT_KEY')
+IAMPORT_SECRET = config('IAMPORT_SECRET')

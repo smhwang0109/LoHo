@@ -5,10 +5,20 @@ from django.views import View
 from .forms import UserForm, ProfileForm
 
 # Create your views here.
-class ProfileView(DetailView):
-    context_object_name = 'profile_user' # model로 지정해준 User모델에 대한 객체와 로그인한 사용자랑 명칭이 겹치기 때문에 이를 지정해줌.
-    model = User
-    template_name = 'account/profile.html'
+def profile(request, user_pk):
+    profile_user = get_object_or_404(User, pk=user_pk)
+    if profile_user.profile:
+        if profile_user.profile.gender == '남':
+            participations = profile_user.manparticipation_set.all
+        else:
+            participations = profile_user.womanparticipation_set.all
+    else:
+        participations = '프로필 수정 필요'
+    context = {
+        'profile_user': profile_user,
+        'participations':participations,
+    }
+    return render(request, 'account/profile.html', context)
 
 def login(request):
     return render(request, 'account/login.html')
@@ -45,4 +55,4 @@ class ProfileUpdateView(View):
             profile.user = u
             profile.save()
 
-        return redirect('accounts:profile', pk=request.user.pk)
+        return redirect('profile', request.user.pk)

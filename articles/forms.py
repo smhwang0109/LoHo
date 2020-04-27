@@ -1,7 +1,7 @@
 from django import forms
 from .models import Article, Comment
 from django.core.validators import MaxValueValidator, MinValueValidator, MinLengthValidator
-from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
+from bootstrap_datepicker_plus import DateTimePickerInput
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 def unit_100(value):

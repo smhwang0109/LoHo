@@ -7,7 +7,7 @@ from .forms import UserForm, ProfileForm
 # Create your views here.
 def profile(request, user_pk):
     profile_user = get_object_or_404(User, pk=user_pk)
-    if profile_user.profile:
+    if hasattr(profile_user, 'profile'):
         if profile_user.profile.gender == '남':
             participations = profile_user.manparticipation_set.all
         else:

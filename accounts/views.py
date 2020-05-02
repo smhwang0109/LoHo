@@ -25,13 +25,13 @@ def login(request):
 
 class ProfileUpdateView(View):
     def get(self, request):
-        user = get_object_or_404(User, pk=request.user.pk)
+        profile_user = get_object_or_404(User, pk=request.user.pk)
         user_form = UserForm(initial={
-            'username': user.username,
+            'username': profile_user.username,
         })
 
-        if hasattr(user, 'profile'):
-            profile = user.profile
+        if hasattr(profile_user, 'profile'):
+            profile = profile_user.profile
             profile_form = ProfileForm(instance=profile)
         else:
             profile_form = ProfileForm()
@@ -39,20 +39,20 @@ class ProfileUpdateView(View):
         return render(request, 'account/profile_update.html', {"user_form":user_form, "profile_form":profile_form})
 
     def post(self, request):
-        u = User.objects.get(id=request.user.pk)
+        profile_user = get_object_or_404(User, pk=request.user.pk)
         user_form = UserForm(request.POST, instance=u) # 기존의 것의 업데이트 하는 것 이므로 기존의 인스턴스를 넘겨줘야 한다. 기존의 것 가져와 수정하는 것
 
         if user_form.is_valid():
             user_form.save()
 
-        if hasattr(u, 'profile'):
-            profile = u.profile
+        if hasattr(profile_user, 'profile'):
+            profile = profile_user.profile
             profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
         else:
             profile_form = ProfileForm(request.POST, request.FILES)
         if profile_form.is_valid():
             profile = profile_form.save(commit=False) # 기존 것 가져오는게 아니고 새로 만들 경우 user를 지정해줘야 한다.
-            profile.user = u
+            profile.user = profile_user
             profile.save()
 
         return redirect('profile', request.user.pk)

@@ -7,7 +7,7 @@
 
 {% block content %}
 {% bootstrap_javascript jquery='full' %}  {# Embed Bootstrap JS+jQuery #}
-<h1>{{user.username}} 프로필 수정 </h1>
+<h1>프로필 수정 </h1>
 
 {% if error_msg %}
 <div class="alert alert-warning alert-dismissible" role="alert">
@@ -19,7 +19,6 @@
 <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ profile_form.media }}
-    {% bootstrap_form user_form %}
     {% bootstrap_form profile_form %}
     <input type="submit" value="Update">
 </form>

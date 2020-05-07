@@ -50,7 +50,7 @@
 <hr class="devide">
 <div class="row my-4 my-lg-5 mx-2">
   <div class="subtitle col-10">이런 취미 어때요?</div>
-  <div class="subtitle col-2 d-flex justify-content-end"><a href="{% url 'articles:category_list' 'all' %}">전체보기</a></div>
+  <div class="subtitle col-2 d-flex justify-content-end"><a class="link-button" href="{% url 'articles:category_list' 'all' %}">전체보기</a></div>
   {% for article in articles %}
   {% if forloop.counter < 5 %}
     <div class="col-3">

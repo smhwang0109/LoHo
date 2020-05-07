@@ -1,19 +1,19 @@
 {% load static %}
 
-<nav class="navbar navbar-expand-lg navbar-light">
-    <a class="navbar-brand ml-5 mt-2" href="{% url 'articles:index' %}"><img src="{% static 'articles/img/Logo.png' %}" alt="로고이미지" height="30px"></a>
+<nav class="navbar navbar-expand-lg navbar-light mb-2">
+    <a class="navbar-brand ml-5" href="{% url 'articles:index' %}"><img src="{% static 'articles/img/Logo.png' %}" alt="로고이미지" height="30px"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <form class="search-form form-inline mt-2 mb-2 mb-lg-0 offset-lg-1 col-lg-6" action="{% url 'articles:search' %}">
+      <form class="search-form form-inline mb-2 mb-lg-0 offset-lg-1 col-lg-6" action="{% url 'articles:search' %}">
         <input class="search-input col-lg-12" type="search" aria-label="Search" name="keyword">
         <button class="search-icon"><img src="{% static 'articles/img/search-icon.png'%}" alt="검색 아이콘" width="20px"></button>
       </form>
       <div class="col-lg-5 d-lg-flex justify-content-end">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#">호스트 신청</a>
+            <a class="nav-link" href="#">디렉터 신청</a>
           </li>
           {% if user.is_active %}
           <li class="nav-item dropdown">
@@ -27,14 +27,14 @@
             </div>
           </li>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">고객센터</a>
-          </li>
           {% else %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'account_login' %}">로그인</a>
           </li>
           {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="#">고객센터</a>
+          </li>
         </ul>
       </div>
     </div>

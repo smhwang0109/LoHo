@@ -40,7 +40,7 @@ class ProfileUpdateView(View):
 
     def post(self, request):
         profile_user = get_object_or_404(User, pk=request.user.pk)
-        user_form = UserForm(request.POST, instance=u) # 기존의 것의 업데이트 하는 것 이므로 기존의 인스턴스를 넘겨줘야 한다. 기존의 것 가져와 수정하는 것
+        user_form = UserForm(request.POST, instance=profile_user) # 기존의 것의 업데이트 하는 것 이므로 기존의 인스턴스를 넘겨줘야 한다. 기존의 것 가져와 수정하는 것
 
         if user_form.is_valid():
             user_form.save()

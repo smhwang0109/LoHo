@@ -13,7 +13,7 @@
   <input type="hidden" name="action" value="{%if article %}update{%else%}create{%endif%}">
 
   {{ form.media }}
-  {{ form.as_p }}
+  {% bootstrap_form form %}
   <input type="submit" value="작성 완료">
 </form>
 

@@ -12,7 +12,7 @@ def unit_100(value):
 class UploadForm(forms.ModelForm):
     class Meta:
         model = Article
-        exclude = ('author', 'created_at', 'updated_at')
+        exclude = ('author', 'created_at', 'updated_at', 'man_participations', 'woman_participations')
         widgets = {
             'title' : forms.TextInput(
                 attrs={'class':'form-control', 'style':'width:100%', 'placeholder': '제목을 입력하세요.'}

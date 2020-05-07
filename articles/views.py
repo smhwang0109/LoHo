@@ -89,7 +89,7 @@ class ArticleCreateUpdateView(LoginRequiredMixin, TemplateView):  # 게시글 �
         post_data = {key: request.POST.get(key) for key in ('title', 'content', 'price', 'participation', 'man_count', 'woman_count', 'event_date', 'category')}  # 작성자를 입력 받지 않도록 수정
         for key in post_data:
             if not post_data[key]:
-                messages.error(self.request, '{} 값이 존재하지 않습니다.'.format(key), extra_tags='danger')  # error 레벨로 메시지 저장
+                messages.warning(self.request, '{} 값이 존재하지 않습니다.'.format(key), extra_tags='danger')  # error 레벨로 메시지 저장
 
         if len(messages.get_messages(request)) == 0:
             if action == 'create':
@@ -98,7 +98,7 @@ class ArticleCreateUpdateView(LoginRequiredMixin, TemplateView):  # 게시글 �
                 article = self.get_object()
                 form = UploadForm(request.POST, request.FILES, instance=article)
             else:
-                messages.error(self.request, '알 수 없는 요청입니다.', extra_tags='danger')  # error 레벨로 메시지 저장
+                messages.warning(self.request, '알 수 없는 요청입니다.', extra_tags='danger')  # error 레벨로 메시지 저장
             
             if form.is_valid():
                 article = form.save(commit=False)
@@ -133,12 +133,12 @@ def man_participation(request, article_id):
     if request.user.profile.gender == '여':
         return redirect('articles:woman_participation', article_id)
     if article.man_participations_count >= article.participations:
-        messages.error(request, '인원 초과입니다.')
+        messages.warning(request, '인원 초과입니다.')
         return redirect('articles:detail', article_id)
     article_manparticipation, article_manparticipation_created = article.manparticipation_set.get_or_create(user=request.user)
 
     if not article_manparticipation_created:
-        messages.error(request, '이미 신청하셨습니다.')
+        messages.warning(request, '이미 신청하셨습니다.')
         return redirect('articles:detail', article_id)
     return redirect('articles:detail', article.pk)
 
@@ -149,12 +149,12 @@ def woman_participation(request, article_id):
     if request.user.profile.gender == '남':
         return redirect('articles:man_participation', article_id)
     if article.woman_participations_count >= article.participations:
-        messages.error(request, '인원 초과입니다.')
+        messages.warning(request, '인원 초과입니다.')
         return redirect('articles:detail', article_id)
     article_womanparticipation, article_womanparticipation_created = article.womanparticipation_set.get_or_create(user=request.user)
 
     if not article_womanparticipation_created:
-        messages.error(request, '이미 신청하셨습니다.')
+        messages.warning(request, '이미 신청하셨습니다.')
         return redirect('articles:detail', article_id)
     return redirect('articles:detail', article.pk)
 

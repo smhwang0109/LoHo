@@ -32,16 +32,6 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'accounts',
-    'articles',
-    'django.contrib.humanize', # 숫자 세자리마다 쉼표 찍기
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -55,6 +45,21 @@ INSTALLED_APPS = [
 
     'ckeditor',
     'ckeditor_uploader',
+
+    'cloudinary_storage',
+
+    'django.contrib.humanize', # 숫자 세자리마다 쉼표 찍기
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    'cloudinary',
+
+    'accounts',
+    'articles',
 ]
 
 MIDDLEWARE = [
@@ -200,3 +205,11 @@ BOOTSTRAP4 = {
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME' : config('CLOUNDINARY_CLOUD_NAME'),
+    'API_KEY' : config('CLOUNDINARY_API_KEY'),
+    'API_SECRET' : config('CLOUNDINARY_API_SECRET'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

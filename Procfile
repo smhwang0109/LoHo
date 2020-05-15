@@ -1,1 +1,1 @@
-web: gunicorn LoHo_web.wsgi --log-file -
+web: gunicorn LoHo_Web.wsgi --log-file -

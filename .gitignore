@@ -117,4 +117,3 @@ dmypy.json
 
 myvenv
 .env
-staticfiles/

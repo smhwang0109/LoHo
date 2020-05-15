@@ -1,0 +1,1 @@
+web: gunicorn LoHo_web.wsgi --log-file -

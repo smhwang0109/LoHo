@@ -197,9 +197,6 @@ BOOTSTRAP4 = {
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
-IAMPORT_KEY = config('IAMPORT_KEY')
-IAMPORT_SECRET = config('IAMPORT_SECRET')
-
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)

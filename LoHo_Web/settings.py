@@ -32,13 +32,6 @@ ALLOWED_HOSTS = ['localhost', 'lohoweb.herokuapp.com']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.naver',
-    'allauth.socialaccount.providers.kakao',
-    'allauth.socialaccount.providers.facebook',
 
     'bootstrap4',
     'bootstrap_datepicker_plus',
@@ -56,10 +49,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'cloudinary',
-
     'accounts',
     'articles',
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.naver',
+    'allauth.socialaccount.providers.kakao',
+    'allauth.socialaccount.providers.facebook',
+
+    'cloudinary',
+
 ]
 
 MIDDLEWARE = [

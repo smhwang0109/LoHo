@@ -1,34 +1,41 @@
 {% extends "base.html" %}
 
+{% load bootstrap4 %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
+{% endblock %}
+
 {% load i18n %}
 {% load account socialaccount %}
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-
-<h1>로그인</h1>
-
-{% get_providers as socialaccount_providers %}
-
-{% if socialaccount_providers %}
-<p>{% blocktrans with site.name as site_name %}Please sign in with one
-of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
-
-<div class="socialaccount_ballot">
-
-  <ul class="socialaccount_providers">
-    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-  </ul>
-
+<div class="d-flex flex-column align-items-center justify-content-center">
+  <p class="m-4 extrabold logintitle">로그인</p>
+  
+  {% get_providers as socialaccount_providers %}
+  
+  {% if socialaccount_providers %}
+  
+  <div class="socialaccount_ballot">
+  
+    <ul class="socialaccount_providers px-0">
+      {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+    </ul>
+  
+  </div>
+  
+  {% include "socialaccount/snippets/login_extra.html" %}
+  
+  {% else %}
+  <p>{% blocktrans %}If you have not created an account yet, then please
+  <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+  {% endif %}
 </div>
 
-{% include "socialaccount/snippets/login_extra.html" %}
-
-{% else %}
-<p>{% blocktrans %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
-{% endif %}
 
 {% endblock %}

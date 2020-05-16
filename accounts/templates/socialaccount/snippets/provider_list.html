@@ -27,15 +27,15 @@
 </li>
 {% endfor %}
 {% endif %}
-<li style="list-style: none;">
+<li class="my-3" style="list-style: none;">
   <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" 
      href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
     {% if provider.name == 'Naver' %}
-    <img src="{{ naver_button }}" height="50" alt="네이버 로그인">
+    <img src="{{ naver_button }}" height="60" alt="네이버 로그인">
     {% elif provider.name == 'Kakao' %}
-    <img src="{{ kakao_button }}" height="50" alt="카카오 로그인">
+    <img src="{{ kakao_button }}" height="60" alt="카카오 로그인">
     {% elif provider.name == 'Facebook' %}
-    <img src="{{ facebook_button }}" height="50" alt="페이스북 로그인">
+    <img src="{{ facebook_button }}" height="60" alt="페이스북 로그인">
     {% endif %}</a>
 </li>
 {% endfor %}

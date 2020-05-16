@@ -17,14 +17,10 @@ def profile(request, user_pk):
         participations = '프로필 수정 필요'
     # data = profile_user.socialaccount_set.all
     context = {
-        'socialaccount' : allauth.socialaccount,
         'profile_user': profile_user,
         'participations':participations,
     }
     return render(request, 'account/profile.html', context)
-
-def login(request):
-    return render(request, 'account/login.html')
 
 class ProfileUpdateView(View):
     def get(self, request):

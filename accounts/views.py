@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.views.generic.detail import DetailView
 from django.views import View
 from .forms import UserForm, ProfileForm
+import allauth
 
 # Create your views here.
 def profile(request, user_pk):
@@ -15,6 +16,8 @@ def profile(request, user_pk):
     else:
         participations = '프로필 수정 필요'
     context = {
+        'account': allauth.account,
+        'socialaccount' : allauth.socialaccount
         'profile_user': profile_user,
         'participations':participations,
     }

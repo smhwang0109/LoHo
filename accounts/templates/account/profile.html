@@ -8,7 +8,7 @@
 {% endblock%}
 
 {% block content %}
-
+{{profile_user.socialaccount_set.all.0.extra_data}}
 <div class="row">
   <div class="col-6 col-md-3 d-flex flex-column justify-content-around align-items-center">
     <div class="profile-photo rounded-circle" style="background-image: url({% if profile_user.profile.profile_photo %}{{ profile_user.profile.profile_photo.url }}{% else %}{% static 'accounts/img/anonymoususer.png' %}{% endif %});"></div>

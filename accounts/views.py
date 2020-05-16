@@ -15,9 +15,9 @@ def profile(request, user_pk):
             participations = profile_user.womanparticipation_set.all
     else:
         participations = '프로필 수정 필요'
+    # data = profile_user.socialaccount_set.all
     context = {
-        'account': allauth.account,
-        'socialaccount' : allauth.socialaccount
+        'socialaccount' : allauth.socialaccount,
         'profile_user': profile_user,
         'participations':participations,
     }

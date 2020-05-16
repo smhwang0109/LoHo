@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', config('DJANGO_SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool( os.environ.get('DJANGO_DEBUG', True))
 
-ALLOWED_HOSTS = ['lohoweb.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', 'lohoweb.herokuapp.com']
 
 
 # Application definition
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
 
-    'cloudinary_storage',
+    # 'cloudinary_storage',
 
     'django.contrib.humanize', # 숫자 세자리마다 쉼표 찍기
     'django.contrib.admin',
@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'cloudinary',
+    # 'cloudinary',
 
     'accounts',
     'articles',
@@ -206,10 +206,10 @@ import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME' : config('CLOUNDINARY_CLOUD_NAME'),
-    'API_KEY' : config('CLOUNDINARY_API_KEY'),
-    'API_SECRET' : config('CLOUNDINARY_API_SECRET'),
-}
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME' : config('CLOUNDINARY_CLOUD_NAME'),
+#     'API_KEY' : config('CLOUNDINARY_API_KEY'),
+#     'API_SECRET' : config('CLOUNDINARY_API_SECRET'),
+# }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

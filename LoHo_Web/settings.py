@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
 
-    'cloudinary_storage',
+    # 'cloudinary_storage',
 
     'django.contrib.humanize', # 숫자 세자리마다 쉼표 찍기
     'django.contrib.admin',
@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.kakao',
     'allauth.socialaccount.providers.facebook',
 
-    'cloudinary',
+    # 'cloudinary',
 
 ]
 
@@ -208,10 +208,14 @@ import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME' : config('CLOUNDINARY_CLOUD_NAME'),
-    'API_KEY' : config('CLOUNDINARY_API_KEY'),
-    'API_SECRET' : config('CLOUNDINARY_API_SECRET'),
-}
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME' : config('CLOUNDINARY_CLOUD_NAME'),
+#     'API_KEY' : config('CLOUNDINARY_API_KEY'),
+#     'API_SECRET' : config('CLOUNDINARY_API_SECRET'),
+# }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+IAMPORT_CODE = config('IAMPORT_CODE')
+IAMPORT_KEY = config('IAMPORT_KEY')
+IAMPORT_SECRET = config('IAMPORT_SECRET')

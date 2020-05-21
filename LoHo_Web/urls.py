@@ -21,8 +21,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.IndexView.as_view()),
-    path('articles/', include('articles.urls')),
     path('accounts/', include('accounts.urls')),
+    path('articles/', include('articles.urls')),
 
     path('ckeditor', include('ckeditor_uploader.urls')),
 

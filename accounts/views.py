@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.views.generic.detail import DetailView
 from django.views import View
 from .forms import UserForm, ProfileForm
-import allauth
+from allauth.socialaccount.models import SocialAccount
 
 # Create your views here.
 def profile(request, user_pk):
@@ -14,9 +14,19 @@ def profile(request, user_pk):
         else:
             participations = profile_user.womanparticipation_set.all
     else:
+
         participations = '프로필 수정 필요'
-    # data = profile_user.socialaccount_set.all
+    socialaccount = get_object_or_404(SocialAccount, user=profile_user)
+    if socialaccount.provider == 'naver':
+        pass
+    elif socialaccount.provider == 'kakao':
+        if socialaccount.extra_data['kakao_account']['has_gender']:
+            if not socialaccount.extra_data['kakao_account']['gender_needs_agreement']:
+                socialaccount.extra_data['kakao_account']['gender']
+    elif socialaccount.provider == 'facebook':
+        pass
     context = {
+        'socialaccount' : socialaccount,
         'profile_user': profile_user,
         'participations':participations,
     }

@@ -8,7 +8,14 @@
 {% endblock%}
 
 {% block content %}
-{{profile_user.socialaccount_set.all.0.extra_data}}
+{% if socialaccount.provider == 'naver' %}
+<p>닉네임 : {{ socialaccount.extra_data.nickname }}</p>
+<p>이메일 : {{ socialaccount.extra_data.email }}</p>
+<p>성별 : {{ socialaccount.extra_data.gender }}</p>
+<p>생일 : {{ socialaccount.extra_data.birthday }}</p>
+<p>연령 : {{ socialaccount.extra_data.age }}</p>
+{% endif %}
+<hr>
 <div class="row">
   <div class="col-6 col-md-3 d-flex flex-column justify-content-around align-items-center">
     <div class="profile-photo rounded-circle" style="background-image: url({% if profile_user.profile.profile_photo %}{{ profile_user.profile.profile_photo.url }}{% else %}{% static 'accounts/img/anonymoususer.png' %}{% endif %});"></div>

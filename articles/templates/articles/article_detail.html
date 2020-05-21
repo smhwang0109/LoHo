@@ -8,6 +8,17 @@
 <link rel="stylesheet" href="{% static 'articles/css/detail.css' %}">
 {% endblock%}
 
+{% block head %}
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script>
+  IMP.init('imp08560607')
+  // document.cookie = "safeCookie1=foo; SameSite=Lax";
+  // document.cookie = "safeCookie2=foo";
+  document.cookie = "crossCookie=bar; SameSite=None; Secure";
+</script>
+{% endblock %}
+
 
 {% block content %}
 {% if messages %}
@@ -120,9 +131,37 @@
     <br>
     <form action="{% if not request.user.profile %}{% url 'profile_update' %}{% elif request.user.profile.gender == '남' %}{% url 'articles:man_participation' article.pk %}{% else %}{% url 'articles:woman_participation' article.pk %}{% endif %}" method="POST"><form action="{% if request.user.profile.gender == '남' %}{% url 'articles:man_participation' article.pk %}{% else %}{% url 'articles:woman_participation' article.pk %}{% endif %}" method="POST">
       {% csrf_token %}
-      <button class="join-button">참가하기</button>
     </form>
+    <button class="join-button">참가하기</button>
     
   </div>
 </div>
+
+
+<script>
+
+
+  const joinButton = document.querySelector('.join-button')
+  joinButton.addEventListener('click', (event) =>{
+    IMP.request_pay({
+        pg : 'kakaopay',
+        merchant_uid : 'merchant_' + new Date().getTime(),
+        name : '주문명:결제테스트',
+        amount : 1000,
+    }, function(rsp) {
+        if ( rsp.success ) {
+            let msg = '결제가 완료되었습니다.';
+            msg += '고유ID : ' + rsp.imp_uid;
+            msg += '상점 거래ID : ' + rsp.merchant_uid;
+            // msg += '결제 금액 : ' + rsp.paid_amount;
+            msg += '카드 승인번호 : ' + rsp.apply_num;
+        } else {
+            let msg = '결제에 실패하였습니다.';
+            msg += '에러내용 : ' + rsp.error_msg;
+        }
+
+        alert(msg);
+    });
+  })
+</script>
 {% endblock %}

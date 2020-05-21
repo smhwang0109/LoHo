@@ -6,7 +6,7 @@ class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     nickname = models.CharField('닉네임', max_length=64, unique=True)
     profile_photo = models.ImageField()
-    birthday = models.DateField('생일', blank=True, default='2020-01-01')    
+    birthday = models.DateField('생일', blank=True)    
     GENDER_CHOICES = [
         ('남', '남'),
         ('여', '여')
